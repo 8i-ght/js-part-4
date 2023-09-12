@@ -4,102 +4,140 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Getting Started with JavaScript</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-        body { padding: 30px; }
-    </style>
+    <title>Document</title>
 </head>
 <body>
     
 
-    <ul id="foodList"></ul>
+<script>
+
+// exercise 1
+console.groupCollapsed('Exercise 1');
+    console.log('There is only locally scoped code in the document');
+console.groupEnd();
+
+// exercise 2
+console.groupCollapsed('Exercise 2');
+    mainFunction();
     
-    <!-- start javascript -->
-   <script>
-       
-    // exercise 7
-    function factorialize(num) {
-        if (num < 0){
-            return -1;
-        } else if (num == 0){
-            return 1;
-        } else {
-            return (num * factorialize(num - 1));
+    function mainFunction() {
+        console.log('Hoisted Function');
+    }
+console.groupEnd();
+
+// excercise 3
+console.groupCollapsed('Exercise 3');
+    function outerFun(x) {
+          function innerFun(d) {
+            return d;
+        };
+        return innerFun;
+    }
+
+outerFun(3);
+let out = outerFun(4);
+console.log(out(3))
+
+console.groupEnd();
+
+// excercise 4
+console.groupCollapsed('Exercise 4');
+    let globalVariable = 'global';
+    
+    function modifyGlobal() {
+        globalVaribale = 'funGlobal';
+        console.log(globalVariable)
+    }
+
+    function localScopeTest() {
+        let globalVariable = 'local';
+        console.log(globalVariable)
+}
+
+    modifyGlobal();
+    localScopeTest();
+console.log(globalVariable);
+console.groupEnd();
+
+// excercise 5
+console.groupCollapsed('Exercise 5');
+function parentFunction(outerFunction) {
+        return function childFunction(innerFunction) {
+            console.log(outerFunction);
+            console.log(innerFunction);
         }
     }
-    num = 3;
 
-    console.log('The factorial of '+ num + ' is '+ factorialize(num));
-   
-   // excercise 8
-   
-   function leapYear(year) {
-    let leap = prompt('What is the current year');
-    
-    if (leap % 4 == 0) {
-        console.log(leap + ' is a leap year');
-    } else {
-        console.log(leap + ' is not a leap year ');
+    const outerVar = parentFunction('Outer')
+    outerVar('Inner')
+console.groupEnd();
+
+// exercise 6
+console.groupCollapsed('Exercise 6');
+/* function hoistingTest() {
+    console.log(printVar);
+    let printVar = 'x';
     }
-   }
 
-   leapYear();
+hoistingTest(); */
+console.groupEnd();
 
-   // excercise 9
+// exercise 7 
 
-   let sum = 0;
-   let number = 1;
+console.groupCollapsed('Exercise 7');
 
-   while (number <= 100) {
-    sum += number;
-    number++;
-   }
+function setupCounter(num) {
+    let count = num;
 
-   console.log('Sum of numbers from 1 to 100 is ' + sum);
+    return function() {
+        const increment = ++count;
+        console.log(increment);
+    }
+}
 
-   // exercise 10
+const counter = setupCounter(6);
+counter();
 
-   function Math() {
+console.groupEnd();
+// exercise 8
 
-   let num1 = prompt('Enter first number:');
-   let num2 = prompt('Enter second number:');
+console.groupCollapsed('Exercise 8');
 
-    console.log(Number(num1) + Number(num2));
-    console.log(Number(num1) - Number(num2));
-    console.log(num1 * num2);
-    console.log(num1 / num2);
-   }
-   
-   Math();
+function initCount(con) {
+    let counter1 = con;
+        return function() {
+            for (counter1 = con; counter1 <= 10; counter1++) {
+                console.log(counter1);
+            }
+        }
+}
 
-   // exercise 11
+let exercise = initCount(2);
+exercise();
 
-   console.log("let stringType = 'this is a string';");
-   console.log("let numberType = 2;");
-   console.log("let booleanType = true;");
-   console.log("let nullType = null;");
-   console.log("let undefinedType = undefined;");
-   console.log("let objectType = {key: 'unlock'};");
-   console.log("let arrayType = ['this', 'is', 'an', 'array'];");
-   console.log("let noDefaultType;");
+console.groupEnd();
 
-   // exercise 12
+// exercise 9 
+console.groupCollapsed('Exercise 9');
+let modification = 'c';
 
-   let foodItems = [
-    {name: 'Burger', price: 10.99},
-    {name: 'Pizza', price: 7.99},
-    {name: 'Sandwich', price: 6.99},
-    {name: 'Soup', price: 4.99}
-];
+function globVar() {
+    modification = 'x';
+    return function() {
+        console.log(modification);
+    }
+}
 
-   const ulElement = document.getElementById('foodList');
+function localVar() {
+   // modiLocal = 'a'; // cannot modifiy the variable before it is declared while inside of a function
+    let modiLocal = 'b';
+    console.log(modiLocal);
+}
 
-foodItems.forEach(food => {
-   const liElement = document.createElement('li');
-   liElement.textContent = food.name;
-   ulElement.appendChild(liElement);
-}); 
-   </script> 
+const logEx = globVar();
+logEx();
+localVar();
+console.groupEnd();
+</script>
 </body>
-</html> 
+</html>
